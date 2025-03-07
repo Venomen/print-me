@@ -1,0 +1,17 @@
+body {
+    background-color: #f8f9fa;
+}
+
+.container {
+    max-width: 600px;
+    margin-top: 50px;
+}
+
+.alert {
+    margin-top: 20px;
+}
+
+table {
+    width: 100%;
+}
+
