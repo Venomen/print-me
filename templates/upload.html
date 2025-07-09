@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Print Server</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
 </head>
 <body>
     <div class="container">
@@ -14,8 +13,10 @@
             {{ form.hidden_tag() }}
             <div class="mb-3">
                 <label class="form-label">{{ form.files.label }}</label>
-                {{ form.files(class="form-control") }}
+                {{ form.files(class="form-control", multiple=True) }}
             </div>
+            <div id="file-ranges"></div>  <!-- Kontener dla pól zakresów stron -->
+
             <div class="mb-3">
                 <label class="form-label">{{ form.paper_size.label }}</label>
                 {{ form.paper_size(class="form-select") }}
@@ -36,5 +37,26 @@
             {% endif %}
         {% endwith %}
     </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            let fileInput = document.querySelector("input[type='file']");
+            let fileRangesDiv = document.getElementById("file-ranges");
+
+            fileInput.addEventListener("change", function () {
+                fileRangesDiv.innerHTML = "";
+                for (let i = 0; i < fileInput.files.length; i++) {
+                    let fileName = fileInput.files[i].name;
+                    let div = document.createElement("div");
+                    div.className = "mb-3";
+                    div.innerHTML = `
+                        <label class="form-label">Page range for ${fileName} (e.g. 1-5, 2, all)</label>
+                        <input type="text" name="page_ranges[]" class="form-control" placeholder="all">
+                    `;
+                    fileRangesDiv.appendChild(div);
+                }
+            });
+        });
+    </script>
 </body>
 </html>
