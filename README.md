@@ -75,3 +75,5 @@ print-me/
 - The application does not have authentication – do not run it in a public environment without additional security.
 
 ## License
+
+MIT
